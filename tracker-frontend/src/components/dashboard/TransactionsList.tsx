@@ -191,7 +191,7 @@ const TransactionsList = () => {
               value={selectedCategory}
             />
           </div>
-          <div className=" flex items-center gap-2 ">
+          <div className=" flex items-center flex-wrap gap-2 ">
             {subcategories.map((subcategory) => (
               <SubcategoryItem
                 key={subcategory.id}

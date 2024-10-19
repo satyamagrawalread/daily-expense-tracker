@@ -20,4 +20,22 @@ const getAllCategories = async(req, res, next) => {
     }
 }
 
-module.exports = {getAllCategories};
+const addCategory = async (req, res, next) => {
+    try {
+        const {category, subcategories} = req.body;
+    const newCategory = new Category({
+        name: category,
+    });
+    const newCategoryResult = await newCategory.save();
+    const modifiedSubcategories = subcategories.map(subcategory => ({
+        name: subcategory.name,
+        parentId: newCategoryResult._id
+    }));
+    await Category.insertMany(modifiedSubcategories);
+    res.status(201).send({message: "Categories added successfully"});
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = {getAllCategories, addCategory};

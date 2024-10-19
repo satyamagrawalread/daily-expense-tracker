@@ -15,7 +15,6 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsLoading(true);
     try {
         const userData = await getProfile(token);
-        console.log('line20 ', userData);
         setUser(userData);
     } catch (error) {
       console.error(error);

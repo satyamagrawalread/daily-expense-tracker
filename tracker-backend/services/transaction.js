@@ -56,7 +56,6 @@ const fillMissingDaysAndCategories = (
   last7DaysList,
   categoriesList
 ) => {
-  //   console.log(aggregatedData, last7DaysList, categoriesList);
   const resultMap = aggregatedData.reduce((acc, item) => {
     return {
       ...acc,

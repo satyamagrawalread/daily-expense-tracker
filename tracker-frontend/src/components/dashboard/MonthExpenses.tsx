@@ -15,15 +15,15 @@ import { Loader2Icon } from "lucide-react";
 
 export const description = "A donut chart with text";
 
-const randomColorGenerator = () => {
-  // const randomColor = Math.floor(Math.random() * 16777215).toString(16);
-  // return `#${randomColor}`;
-  var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += Math.floor(Math.random() * 10);
-    }
-    return color;
-};
+// const randomColorGenerator = () => {
+//   // const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+//   // return `#${randomColor}`;
+//   var color = '#';
+//     for (var i = 0; i < 6; i++) {
+//         color += Math.floor(Math.random() * 10);
+//     }
+//     return color;
+// };
 
 
 
@@ -77,10 +77,10 @@ const MonthExpenses = () => {
       },
     };
 
-    categoriesData?.data && categoriesData.data.forEach(category => {
-      chartConfig[category.categoryName] = {
+    categoriesData?.data && categoriesData.data.forEach((category, index) => {
+      chartConfig[category.categoryName.replace(/[-&\s]/g, '')] = {
         label: category.categoryName.charAt(0).toUpperCase() + category.categoryName.slice(1),
-        color: randomColorGenerator()
+        color: `hsl(var(--chart-${index+1}))`
       };
     })
     return chartConfig;
@@ -88,9 +88,9 @@ const MonthExpenses = () => {
   const categories = useMemo(() => {
     return categoriesData?.data
       ? categoriesData.data.map(category => ({
-          category: category.categoryName,
+          category: category.categoryName.replace(/[-&\s]/g, ''),
           amount: category.totalAmount,
-          fill: `var(--color-${category.categoryName})`
+          fill: `var(--color-${category.categoryName.replace(/[-&\s]/g, '')})`
         }))
       : [];
   }, [categoriesData]);
@@ -167,7 +167,7 @@ const MonthExpenses = () => {
             </Pie>
           </PieChart>
         </ChartContainer>
-        <div className=" flex items-center flex-wrap gap-6 max-w-60 ">
+        <div className=" flex items-center justify-between flex-wrap gap-6 md:max-w-60 ">
           {categories.map((data) => (
             <div
               className=" flex items-center gap-4 min-w-28 "

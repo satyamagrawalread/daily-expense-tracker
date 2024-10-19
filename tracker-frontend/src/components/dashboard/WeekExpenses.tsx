@@ -49,14 +49,13 @@ const WeekExpenses = () => {
   const yesterday = dayjs().add(330, 'minutes').subtract(1, 'day')
     .toISOString()
     .split("T")[0];
-  console.log(today);
   const chartConfig = useMemo(() => {
 
     return (categoriesData?.data &&
       categoriesData.data[0]?.categories?.reduce((acc, category, index) => {
         return {
           ...acc,
-          [category.name.replace('-', '').toLowerCase()]: {
+          [category.name.replace(/[-&\s]/g, '').toLowerCase()]: {
             label: category.name.charAt(0).toUpperCase() + category.name.slice(1),
             color: `hsl(var(--chart-${index + 1}))`,
           }
@@ -76,14 +75,13 @@ const WeekExpenses = () => {
           ...category.categories.reduce(
             (acc, current) => ({
               ...acc,
-              [current.name.replace('-', '').toLowerCase()]: current.totalAmount,
+              [current.name.replace(/[-&\s]/g, '').toLowerCase()]: current.totalAmount,
             }),
             {}
           ),
         }))
       : [];
   }, [categoriesData]);
-  console.log(chartConfig, categories);
   return (
     <Card>
       <CardHeader>
