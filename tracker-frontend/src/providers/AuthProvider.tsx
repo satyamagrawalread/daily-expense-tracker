@@ -1,15 +1,51 @@
-import { useState } from "react"
+import { ReactNode, useState, useEffect } from "react";
+import { IUser } from "../types/user.types";
+import { AuthContext } from "../context/AuthContext";
+import { getToken } from "../helpers";
+import { useToast } from "../hooks/use-toast";
+import { ToastAction } from "../components/ui/toast";
+import { getProfile } from "../api-functions/user.api";
 
-const AuthProvider = () => {
-    const [user, setUser] = useState<IUser>()
-
-    const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        console.log(event.target)
+const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<IUser | undefined>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const authToken: string | null = getToken();
+  const { toast } = useToast();
+  const fetchLoggedInUser = async (token: String) => {
+    setIsLoading(true);
+    try {
+        const userData = await getProfile(token);
+        console.log('line20 ', userData);
+        setUser(userData);
+    } catch (error) {
+      console.error(error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        action: <ToastAction altText="Try again">Try again</ToastAction>,
+      });
+    } finally {
+        setIsLoading(false);
     }
+  };
 
-    return (
-        <div onClick={(e) => {}} >
 
-        </div>
-    )
-}
+  useEffect(() => {
+    const init = async () => {
+      if (authToken) {
+        fetchLoggedInUser(authToken);
+      } else {
+        setIsLoading(false);
+      }
+    };
+    init();
+  }, [authToken]);
+
+  return (
+    <AuthContext.Provider value={{ user, setUser, isLoading }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export default AuthProvider;
