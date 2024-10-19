@@ -22,6 +22,7 @@ const getAllCategories = async(req, res, next) => {
 
 const addCategory = async (req, res, next) => {
     try {
+        return res.send({message: "Trail going on"});
         const {category, subcategories} = req.body;
     const newCategory = new Category({
         name: category,
@@ -32,7 +33,7 @@ const addCategory = async (req, res, next) => {
         parentId: newCategoryResult._id
     }));
     await Category.insertMany(modifiedSubcategories);
-    res.status(201).send({message: "Categories added successfully"});
+    return res.status(201).send({message: "Categories added successfully"});
     } catch (error) {
         next(error);
     }

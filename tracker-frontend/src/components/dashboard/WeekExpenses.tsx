@@ -18,31 +18,6 @@ dayjs.extend(advancedFormat);
 
 export const description = "A stacked bar chart with a legend";
 
-// const chartData = [
-//   { day: "Monday", essentials: 186, nonessentials: 80, miscellaneous: 0 },
-//   { day: "Tuesday", essentials: 305, nonessentials: 200, miscellaneous: 0 },
-//   { day: "Wednesday", essentials: 237, nonessentials: 120, miscellaneous: 0 },
-//   { day: "Thursday", essentials: 73, nonessentials: 190, miscellaneous: 0 },
-//   { day: "Friday", essentials: 209, nonessentials: 130, miscellaneous: 0 },
-//   { day: "Saturday", essentials: 214, nonessentials: 140, miscellaneous: 0 },
-//   { day: "Sunday", essentials: 214, nonessentials: 140, miscellaneous: 0 },
-// ];
-
-// const chartConfig = {
-//   miscellaneous: {
-//     label: "Miscellaneous",
-//     color: "hsl(var(--chart-3))",
-//   },
-//   essentials: {
-//     label: "Essentials",
-//     color: "hsl(var(--chart-1))",
-//   },
-//   nonessentials: {
-//     label: "Non-essentials",
-//     color: "hsl(var(--chart-2))",
-//   },
-// } satisfies ChartConfig;
-
 const WeekExpenses = () => {
   const { data: categoriesData, isLoading } = useGetLastWeekCategoryDataQuery();
   const today = dayjs().add(330, 'minutes').toISOString().split("T")[0];

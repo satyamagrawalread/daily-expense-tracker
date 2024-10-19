@@ -132,38 +132,6 @@ const MonthExpenses = () => {
               width="99%"
               
             >
-              {/* <Label
-                content={({ viewBox }) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                    return (
-                      <text
-                        x={viewBox.cx}
-                        y={viewBox.cy}
-                        textAnchor="middle"
-                        dominantBaseline="middle"
-                      >
-                        <tspan
-                          x={viewBox.cx}
-                          y={viewBox.cy}
-                          className="fill-foreground text-xl font-bold"
-                        >
-                          {totalExpense.toLocaleString("en-In", {
-                            currency: "INR",
-                            style: "currency",
-                          })}
-                        </tspan>
-                        <tspan
-                          x={viewBox.cx}
-                          y={(viewBox.cy || 0) + 24}
-                          className="fill-muted-foreground"
-                        >
-                          Expense
-                        </tspan>
-                      </text>
-                    );
-                  }
-                }}
-              /> */}
             </Pie>
           </PieChart>
         </ChartContainer>
