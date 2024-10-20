@@ -36,7 +36,19 @@ const WeekExpenses = () => {
         }
       }, {})) || {};
   }, [categoriesData]);
-
+  const isAllDataZero = useMemo(() => {
+    let isAllZero = true;
+    categoriesData?.data && categoriesData.data.some(category => {
+      return category.categories.some(element => {
+        if(element.totalAmount!=0) {
+          isAllZero = false;
+          return true;
+        }
+        return false;
+      })
+    })
+    return isAllZero;
+  }, [categoriesData]);
   const categories = useMemo(() => {
     return categoriesData?.data
       ? categoriesData.data.map((category) => ({
@@ -61,7 +73,8 @@ const WeekExpenses = () => {
       <CardHeader>
         <CardTitle>This Week</CardTitle>
       </CardHeader>
-      <CardContent>
+      {(categories.length==0 || isAllDataZero) && <div className="text-center">No Data Found</div>}
+      {categories.length > 0 && <CardContent>
         <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={categories}>
             <CartesianGrid vertical={false} />
@@ -116,7 +129,7 @@ const WeekExpenses = () => {
             /> */}
           </BarChart>
         </ChartContainer>
-      </CardContent>
+      </CardContent>}
     </Card>
   );
 };

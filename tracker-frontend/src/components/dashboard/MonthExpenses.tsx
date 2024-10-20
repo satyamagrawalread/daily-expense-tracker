@@ -25,10 +25,6 @@ export const description = "A donut chart with text";
 //     return color;
 // };
 
-
-
-
-
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
   cx,
@@ -76,20 +72,36 @@ const MonthExpenses = () => {
       },
     };
 
-    categoriesData?.data && categoriesData.data.forEach((category, index) => {
-      chartConfig[category.categoryName.replace(/[-&\s]/g, '')] = {
-        label: category.categoryName.charAt(0).toUpperCase() + category.categoryName.slice(1),
-        color: `hsl(var(--chart-${index+1}))`
-      };
-    })
+    categoriesData?.data &&
+      categoriesData.data.forEach((category, index) => {
+        chartConfig[category.categoryName.replace(/[-&\s]/g, "")] = {
+          label:
+            category.categoryName.charAt(0).toUpperCase() +
+            category.categoryName.slice(1),
+          color: `hsl(var(--chart-${index + 1}))`,
+        };
+      });
     return chartConfig;
-  }, [categoriesData])
+  }, [categoriesData]);
+  const isAllCategoryZero = useMemo(() => {
+      let isAllZero = true;
+      !!categoriesData?.data &&
+      !categoriesData.data.some((category) => {
+        if(category.totalAmount != 0){
+          isAllZero = false;
+          return true;
+        }
+        return false;
+      });
+      return isAllZero;
+    
+  }, [categoriesData]);
   const categories = useMemo(() => {
     return categoriesData?.data
-      ? categoriesData.data.map(category => ({
-          category: category.categoryName.replace(/[-&\s]/g, ''),
+      ? categoriesData.data.map((category) => ({
+          category: category.categoryName.replace(/[-&\s]/g, ""),
           amount: category.totalAmount,
-          fill: `var(--color-${category.categoryName.replace(/[-&\s]/g, '')})`
+          fill: `var(--color-${category.categoryName.replace(/[-&\s]/g, "")})`,
         }))
       : [];
   }, [categoriesData]);
@@ -110,7 +122,8 @@ const MonthExpenses = () => {
       <CardHeader className="pb-0">
         <CardTitle>This Month</CardTitle>
       </CardHeader>
-      {categories.length > 0 ? (<CardContent className="flex-1 flex items-center gap-10 flex-wrap">
+      {(categories.length==0 || isAllCategoryZero) && <div className="text-center">No Data Found</div>}
+      {categories.length>0 && <CardContent className="flex-1 flex items-center gap-10 flex-wrap">
         <ChartContainer
           config={chartConfig}
           className="aspect-square flex-1 min-w-60"
@@ -129,9 +142,7 @@ const MonthExpenses = () => {
               label={renderCustomizedLabel}
               labelLine={false}
               width="99%"
-              
-            >
-            </Pie>
+            ></Pie>
           </PieChart>
         </ChartContainer>
         <div className=" flex items-center justify-between flex-wrap gap-6 md:max-w-60 ">
@@ -160,12 +171,8 @@ const MonthExpenses = () => {
             </div>
           ))}
         </div>
-      </CardContent>) 
-      : (
-        <div>
-          No Categories Data Found
-        </div>
-      )}
+      </CardContent>}
+      
     </Card>
   );
 };
