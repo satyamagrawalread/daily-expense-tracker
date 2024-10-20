@@ -13,8 +13,11 @@ const register = async (req, res, next) => {
     }
     // const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ username, password });
-    await user.save();
-    return res.status(201).send({ message: "Registration successful" });
+    const userData = await user.save();
+    const token = jwt.sign({ userId: userData._id }, process.env.SECRET_KEY, {
+      // expiresIn: "1 hour",
+    });
+    return res.status(201).send({ token });
   } catch (error) {
     console.error(error);
     // next(error);

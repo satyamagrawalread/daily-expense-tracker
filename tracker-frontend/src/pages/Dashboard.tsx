@@ -16,11 +16,11 @@ import { useEffect } from "react";
 import { getToken, removeToken } from "../helpers";
 
 const Dashboard = () => {
-  const { user, isLoading } = useAuthContext();
+  const { user, setUser, isLoading } = useAuthContext();
   const navigate = useNavigate();
   const authToken = getToken();
-  const { setUser } = useAuthContext();
   useEffect(() => {
+    // console.log(authToken, isLoading, user);
     if (!authToken || (!isLoading && !user)) {
       navigate("/signin", { replace: true });
     }

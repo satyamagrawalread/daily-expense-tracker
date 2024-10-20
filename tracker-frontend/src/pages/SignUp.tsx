@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { registerUser } from "../api-functions/auth.api";
-import { setToken } from "../helpers";
 import axios from "axios";
-import { useToast } from "../hooks/use-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Loader2Icon } from "lucide-react";
+import { usePostMutationRegister } from "@/hooks/api-hooks/useAuthQuery";
 
 type UserInputs = {
   username: string;
@@ -21,8 +19,8 @@ const SignUp = () => {
     useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
-  const { toast } = useToast();
   const { user, isLoading } = useAuthContext();
+  const { mutate: registerUser, isLoading: isRegisterLoading } = usePostMutationRegister();
   useEffect(() => {
     if(user) {
       navigate("/", { replace: true });
@@ -38,18 +36,13 @@ const SignUp = () => {
   const onSubmit: SubmitHandler<UserInputs> = async (data, event) => {
     event?.preventDefault();
     try {
-      const userData = new FormData();
-      userData.append("username", data.username);
-      userData.append("password", data.password);
-      // const value = {
-      //   username: data.username,
-      // };
-      const result = await registerUser(userData);
-      setToken(result.token);
-      toast({
-        description: `Welcome to your dashboard: ${data.username}!`,
+      
+      registerUser({
+        username: data.username,
+        password: data.password
       });
-      navigate("/", { replace: true });
+      
+      
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const statusCode = error.response.status;
@@ -208,7 +201,7 @@ const SignUp = () => {
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
+              >{isRegisterLoading && <Loader2Icon className=" animate-spin " />}
                 Sign Up
               </button>
             </div>

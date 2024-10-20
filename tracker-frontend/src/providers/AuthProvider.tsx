@@ -2,15 +2,15 @@ import { ReactNode, useState, useEffect } from "react";
 import { IUser } from "../types/user.types";
 import { AuthContext } from "../context/AuthContext";
 import { getToken } from "../helpers";
-import { useToast } from "../hooks/use-toast";
-import { ToastAction } from "../components/ui/toast";
 import { getProfile } from "../api-functions/user.api";
+import { message } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<IUser | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const authToken: string | null = getToken();
-  const { toast } = useToast();
+  // const { toast } = useToast();
   const fetchLoggedInUser = async (token: String) => {
     setIsLoading(true);
     try {
@@ -18,11 +18,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(userData);
     } catch (error) {
       console.error(error);
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        action: <ToastAction altText="Try again">Try again</ToastAction>,
-      });
+      message.error("Uh oh! Something went wrong.");
+      // toast({
+      //   variant: "destructive",
+      //   title: "Uh oh! Something went wrong.",
+      //   action: <ToastAction altText="Try again">Try again</ToastAction>,
+      // });
     } finally {
         setIsLoading(false);
     }

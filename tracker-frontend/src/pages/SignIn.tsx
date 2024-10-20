@@ -2,13 +2,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../context/AuthContext";
-import { setToken } from "../helpers";
 import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { loginUser } from "../api-functions/auth.api";
-import { useToast } from "../hooks/use-toast";
 import axios from "axios";
 import { Loader2Icon } from "lucide-react";
+import { usePostMutationLogin } from "@/hooks/api-hooks/useAuthQuery";
 
 type UserInputs = {
   username: string;
@@ -18,9 +16,9 @@ type UserInputs = {
 const SignIn = () => {
   const [viewPassword, setViewPassword] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
-  const { toast } = useToast();
   const navigate = useNavigate();
   const { user, isLoading } = useAuthContext();
+  const { mutate: loginUser, isLoading: isLoginLoading } = usePostMutationLogin();
   useEffect(() => {
     if (user) {
       navigate("/", { replace: true });
@@ -36,18 +34,11 @@ const SignIn = () => {
     event?.preventDefault();
     setError("");
     try {
-      const userData = new FormData();
-      userData.append("username", data.username);
-      userData.append("password", data.password);
-
-      const result = await loginUser(userData);
-      setToken(result.token);
-      // setUser(value);
-      toast({
-        description: `Welcome back: ${data.username}!`,
+      loginUser({
+        username: data.username,
+        password: data.password
       });
 
-      navigate("/", { replace: true });
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const statusCode = error.response.status;
@@ -174,7 +165,7 @@ const SignIn = () => {
                 <button
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
+                >{isLoginLoading && <Loader2Icon className=" animate-spin " />}
                   Sign In
                 </button>
               </div>
