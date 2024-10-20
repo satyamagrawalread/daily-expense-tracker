@@ -53,6 +53,7 @@ const WeekExpenses = () => {
     return isAllZero;
   }, [categoriesData]);
   const categories = useMemo(() => {
+    console.log('line56 ', categoriesData?.data);
     return categoriesData?.data
       ? categoriesData.data.map((category) => ({
           date:

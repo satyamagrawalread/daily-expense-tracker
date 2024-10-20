@@ -49,6 +49,9 @@ export const useGetLastWeekCategoryDataQuery = () => {
   }>({
     queryKey: ["lastWeekTransaction"],
     queryFn: () => getLastWeekCategoryData(),
+    onSuccess: (data) => {
+      console.log('line53 ', data);
+    }
   });
 };
 
