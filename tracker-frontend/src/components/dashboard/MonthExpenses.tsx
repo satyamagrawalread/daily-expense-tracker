@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import { Label, Pie, PieChart } from "recharts";
+import { Pie, PieChart } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import {
@@ -37,7 +37,6 @@ const renderCustomizedLabel = ({
   innerRadius,
   outerRadius,
   percent,
-  index,
 }: {
   cx: number;
   cy: number;

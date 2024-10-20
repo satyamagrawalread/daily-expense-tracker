@@ -4,7 +4,6 @@ import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import {
-  ChartConfig,
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
@@ -19,7 +18,7 @@ dayjs.extend(advancedFormat);
 export const description = "A stacked bar chart with a legend";
 
 const WeekExpenses = () => {
-  const { data: categoriesData, isLoading } = useGetLastWeekCategoryDataQuery();
+  const { data: categoriesData } = useGetLastWeekCategoryDataQuery();
   const today = dayjs().add(330, 'minutes').toISOString().split("T")[0];
   const yesterday = dayjs().add(330, 'minutes').subtract(1, 'day')
     .toISOString()
