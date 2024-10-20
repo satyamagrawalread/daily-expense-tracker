@@ -49,7 +49,7 @@ const SignIn = () => {
 
       navigate("/", { replace: true });
     } catch (error) {
-      console.error(error);
+      console.error('line52 ', error);
       if (axios.isAxiosError(error) && error.response) {
         setError(error.response.data);
       } else {
@@ -90,10 +90,10 @@ const SignIn = () => {
           >
             <div>
               <label
-                htmlFor="email"
+                htmlFor="username"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-                Email address
+                Username
               </label>
               <div className="mt-2">
                 <input
