@@ -12,15 +12,17 @@ import {
 } from "../ui/chart";
 import { useGetLastWeekCategoryDataQuery } from "../../hooks/api-hooks/useTransactionsQuery";
 import dayjs from "dayjs";
-import advancedFormat from 'dayjs/plugin/advancedFormat'
-dayjs.extend(advancedFormat);
+import utc from 'dayjs/plugin/utc';
+// import advancedFormat from 'dayjs/plugin/advancedFormat'
+// dayjs.extend(advancedFormat);
+dayjs.extend(utc);
 
 export const description = "A stacked bar chart with a legend";
 
 const WeekExpenses = () => {
   const { data: categoriesData } = useGetLastWeekCategoryDataQuery();
-  const today = dayjs().add(330, 'minutes').toISOString().split("T")[0];
-  const yesterday = dayjs().add(330, 'minutes').subtract(1, 'day')
+  const today = dayjs.utc().add(330, 'minutes').toISOString().split("T")[0];
+  const yesterday = dayjs.utc().add(330, 'minutes').subtract(1, 'day')
     .toISOString()
     .split("T")[0];
   const chartConfig = useMemo(() => {

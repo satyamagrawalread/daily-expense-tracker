@@ -9,8 +9,10 @@ import { useGetCategories } from "../../hooks/api-hooks/useCategoryQuery";
 import { ICategories } from "../../types/category.types";
 import SelectComponent from "../ui/selectcomponent";
 import dayjs from 'dayjs';
-import advancedFormat from 'dayjs/plugin/advancedFormat'
-dayjs.extend(advancedFormat);
+import utc from 'dayjs/plugin/utc';
+// import advancedFormat from 'dayjs/plugin/advancedFormat'
+// dayjs.extend(advancedFormat);
+dayjs.extend(utc);
 
 const SubcategoryItem = ({
   selectedSubCategories,
@@ -51,10 +53,10 @@ const TransactionsList = () => {
 
   const { data: categoriesData, isLoading: isLoadingCategories } =
     useGetCategories();
-    const today = dayjs().add(330, 'minutes').toISOString().split("T")[0];
-    const yesterday = dayjs().add(330, 'minutes').subtract(1, 'day')
-      .toISOString()
-      .split("T")[0];
+    const today = dayjs.utc().add(330, 'minutes').toISOString().split("T")[0];
+  const yesterday = dayjs.utc().add(330, 'minutes').subtract(1, 'day')
+    .toISOString()
+    .split("T")[0];
   const categories = useMemo(() => {
     return (categoriesData?.data || []) as ICategories[];
   }, [categoriesData]);
