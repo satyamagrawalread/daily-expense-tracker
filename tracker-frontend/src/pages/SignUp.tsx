@@ -51,11 +51,17 @@ const SignUp = () => {
       });
       navigate("/", { replace: true });
     } catch (error) {
-      console.error(error);
       if (axios.isAxiosError(error) && error.response) {
-        setError(error.response.data);
+        const statusCode = error.response.status;
+        const errorMessage = error.response.data.message || "An error occurred";
+  
+        if ([404, 401, 500, 409].includes(statusCode)) {
+          setError(errorMessage);
+        } else {
+          setError(errorMessage);
+        }
       } else {
-        setError("Something Went Wrong");
+        console.error(error);
       }
     }
   };

@@ -16,7 +16,8 @@ const getAllCategories = async(req, res, next) => {
         }))
         return res.status(200).send({data: resultCategories});
     } catch (error) {
-        next(error);
+        // next(error);
+        return res.status(500).send({message: "Internal Server Error"});
     }
 }
 
@@ -35,7 +36,8 @@ const addCategory = async (req, res, next) => {
     await Category.insertMany(modifiedSubcategories);
     return res.status(201).send({message: "Categories added successfully"});
     } catch (error) {
-        next(error);
+        // next(error);
+        return res.status(500).send({message: "Internal Server Error"});
     }
 }
 

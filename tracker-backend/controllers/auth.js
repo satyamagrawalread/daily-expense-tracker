@@ -9,7 +9,7 @@ const register = async (req, res, next) => {
   try {
     const savedUser = await User.findOne({username});
     if(savedUser) {
-      return res.send({error: "User Already Exists"});
+      return res.status(409).send({message: "User Already Exists"});
     }
     // const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ username, password });
@@ -17,7 +17,8 @@ const register = async (req, res, next) => {
     return res.status(201).send({ message: "Registration successful" });
   } catch (error) {
     console.error(error);
-    next(error);
+    // next(error);
+    return res.status(500).send({message: "Internal Server Error"});
   }
 };
 

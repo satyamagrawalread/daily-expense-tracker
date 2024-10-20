@@ -27,7 +27,8 @@ const createTransaction = async (req, res, next) => {
     await transaction.save();
     return res.status(201).send({ message: "New Transaction Created" });
   } catch (error) {
-    next(error);
+    // next(error);
+    return res.status(500).send({message: "Internal Server Error"});
   }
 };
 
@@ -66,7 +67,8 @@ const getAllTransactionsById = async (req, res, next) => {
       return res.status(200).send({ data: modifyTransactions(transactions) });
     }
   } catch (error) {
-    next(error);
+    // next(error);
+    return res.status(500).send({message: "Internal Server Error"});
   }
 };
 
@@ -110,7 +112,8 @@ const getCurrentMonthTransactions = async (req, res, next) => {
 
     return res.status(200).send({ data: categoriesResult });
   } catch (error) {
-    next(error);
+    // next(error);
+    return res.status(500).send({message: "Internal Server Error"});
   }
 };
 
@@ -153,7 +156,8 @@ const getLastWeekTransactions = async (req, res, next) => {
         ),
       });
   } catch (error) {
-    next(error);
+    // next(error);
+    return res.status(500).send({message: "Internal Server Error"});
   }
 };
 
