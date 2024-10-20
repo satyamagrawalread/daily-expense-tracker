@@ -61,7 +61,7 @@ const Dashboard = () => {
           </div>
           <div className="w-screen flex lg:hidden flex-col gap-4 max-w-6xl mx-auto py-10 px-4 flex-1 overflow-y-auto">
             <Tabs defaultValue="transactions">
-              <TabsList>
+              <TabsList className="w-full flex ">
                 <TabsTrigger value="transactions">Transactions</TabsTrigger>
                 <TabsTrigger value="summary">Summary</TabsTrigger>
               </TabsList>

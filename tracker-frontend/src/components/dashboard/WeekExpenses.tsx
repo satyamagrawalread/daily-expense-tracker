@@ -100,7 +100,7 @@ const WeekExpenses = () => {
                 />
               }
             />
-            <ChartLegend content={<ChartLegendContent />} />
+            <ChartLegend className="flex flex-wrap" content={<ChartLegendContent />} />
             {
               Object.keys(chartConfig).map(key => (<Bar key={key} 
                 dataKey={key}
