@@ -1,7 +1,7 @@
 import { loginUser, registerUser } from "@/api-functions/auth.api";
 import { useMutation } from "react-query";
 // import { useToast } from "../use-toast";
-import { getToken, setToken } from "@/helpers";
+import { setToken } from "@/helpers";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 import { useAuthContext } from "@/context/AuthContext";

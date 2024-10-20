@@ -4,7 +4,6 @@ import { AuthContext } from "../context/AuthContext";
 import { getToken } from "../helpers";
 import { getProfile } from "../api-functions/user.api";
 import { message } from "antd";
-import { useNavigate } from "react-router-dom";
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<IUser | undefined>();
