@@ -25,7 +25,6 @@ const WeekExpenses = () => {
   const yesterday = dayjs.utc().add(330, 'minutes').subtract(1, 'day')
     .toISOString()
     .split("T")[0];
-  console.log('ine28 ', today);
   const chartConfig = useMemo(() => {
 
     return (categoriesData?.data &&
@@ -53,7 +52,6 @@ const WeekExpenses = () => {
     return isAllZero;
   }, [categoriesData]);
   const categories = useMemo(() => {
-    console.log('line56 ', categoriesData?.data);
     return categoriesData?.data
       ? categoriesData.data.map((category) => ({
           date:
@@ -72,7 +70,6 @@ const WeekExpenses = () => {
         }))
       : [];
   }, [categoriesData]);
-  console.log('line73 ', categories);
   return (
     <Card>
       <CardHeader>

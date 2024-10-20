@@ -20,7 +20,6 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const authToken = getToken();
   useEffect(() => {
-    // console.log(authToken, isLoading, user);
     if (!authToken || (!isLoading && !user)) {
       navigate("/signin", { replace: true });
     }

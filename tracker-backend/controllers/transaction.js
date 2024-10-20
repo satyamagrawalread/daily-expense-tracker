@@ -122,7 +122,7 @@ const getLastWeekTransactions = async (req, res, next) => {
   try {
     const currentDate = new Date(getCurrentIstTime());
     const sevenDaysAgo = new Date(getCurrentIstTime());
-    sevenDaysAgo.setDate(currentDate.getDate() - 7);
+    sevenDaysAgo.setDate(currentDate.getDate() - 6);
     const aggregatedData = await Transaction.aggregate([
       {
         $match: {
@@ -156,7 +156,6 @@ const getLastWeekTransactions = async (req, res, next) => {
         ),
       });
   } catch (error) {
-    // next(error);
     return res.status(500).send({message: "Internal Server Error"});
   }
 };

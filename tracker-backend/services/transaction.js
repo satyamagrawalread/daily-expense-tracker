@@ -1,4 +1,3 @@
-const moment = require("moment");
 const modifyTransactions = (transactions) => {
   const resultMap = {};
   let dateList = [];
@@ -41,11 +40,13 @@ const modifyTransactions = (transactions) => {
 
 const getLast7Days = () => {
   const last7Days = [];
-  const today = moment().startOf("day");
+  const today = new Date(getCurrentIstTime());
 
   for (let i = 0; i < 7; i++) {
-    const day = today.clone().subtract(i, "days").format("YYYY-MM-DD");
-    last7Days.push(day);
+    const timestamp = new Date(getCurrentIstTime());
+    timestamp.setDate(today.getDate() - i);
+    const date = timestamp.toISOString().split('T')[0];
+    last7Days.push(date);
   }
 
   return last7Days.reverse();
