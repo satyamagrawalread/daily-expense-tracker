@@ -18,13 +18,18 @@ const SignIn = () => {
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
   const { user, isLoading } = useAuthContext();
-  const { mutate: loginUser, isLoading: isLoginLoading } =
+  const { mutate: loginUser, isLoading: isLoginLoading, error: errorMessage, isError } =
     usePostMutationLogin();
   useEffect(() => {
     if (user) {
       navigate("/", { replace: true });
     }
   }, [user]);
+  useEffect(() => {
+    if (isError && axios.isAxiosError(errorMessage) && errorMessage.response) {
+      setError(errorMessage.response.data.message || "An error occurred");
+    }
+  }, [errorMessage]);
   const {
     register,
     handleSubmit,

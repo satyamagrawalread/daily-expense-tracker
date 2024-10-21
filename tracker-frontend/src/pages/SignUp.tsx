@@ -20,13 +20,22 @@ const SignUp = () => {
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
   const { user, isLoading } = useAuthContext();
-  const { mutate: registerUser, isLoading: isRegisterLoading } =
-    usePostMutationRegister();
+  const {
+    mutate: registerUser,
+    isLoading: isRegisterLoading,
+    error: errorMessage,
+    isError,
+  } = usePostMutationRegister();
   useEffect(() => {
     if (user) {
       navigate("/", { replace: true });
     }
   }, [user]);
+  useEffect(() => {
+    if (isError && axios.isAxiosError(errorMessage) && errorMessage.response) {
+      setError(errorMessage.response.data.message || "An error occurred");
+    }
+  }, [errorMessage]);
   const {
     register,
     getValues,
@@ -42,20 +51,10 @@ const SignUp = () => {
         password: data.password,
       });
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        const statusCode = error.response.status;
-        const errorMessage = error.response.data.message || "An error occurred";
-
-        if ([404, 401, 500, 409].includes(statusCode)) {
-          setError(errorMessage);
-        } else {
-          setError(errorMessage);
-        }
-      } else {
-        console.error(error);
-      }
+      console.error(error);
     }
   };
+
   if (isLoading) {
     return (
       <div className="h-svh flex justify-center items-center">
@@ -105,9 +104,12 @@ const SignUp = () => {
                     })}
                     //   id="username"
                     //   name="username"
-                    //   type="text"
+                    type="text"
                     //   required
                     //   autoComplete="username"
+                    onChange={() => {
+                      setError("");
+                    }}
                     className="block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                   />
                   {errors.username && (
@@ -143,6 +145,9 @@ const SignUp = () => {
                       type={viewPassword ? "text" : "password"}
                       //   required
                       //   autoComplete="new-password"
+                      onChange={() => {
+                        setError("");
+                      }}
                       className="block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                     <span
@@ -182,6 +187,9 @@ const SignUp = () => {
                       type={viewConfirmPassword ? "text" : "password"}
                       //   required
                       //   autoComplete="confirm-password"
+                      onChange={() => {
+                        setError("");
+                      }}
                       className="block w-full rounded-md border-0 py-1.5 pl-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
                     <span
