@@ -18,9 +18,10 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <ErrorBoundary fallback={<div className="w-screen mt-14 flex-col items-center">
-          <div>🥺</div>
-          <div>Something went wrong</div>
+        <ErrorBoundary fallback={<div className="h-svh w-screen flex flex-col items-center justify-center gap-2">
+          <div className="text-8xl">🥺</div>
+          <div className="text-2xl md:text-4xl text-gray-500">Something went wrong</div>
+          <div className="text-xl md:text-2xl text-gray-500 pb-52">Try Again!</div>
         </div>}>
           <AuthProvider>
             <BrowserRouter>
