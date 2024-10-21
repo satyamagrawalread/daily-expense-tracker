@@ -33,7 +33,10 @@ const Dashboard = () => {
   if (isLoading) {
     return (
       <div className="h-svh flex justify-center items-center">
-        <Loader2Icon className=" animate-spin " />
+        <div className="flex flex-col items-center">
+          <div className="text-gray-500">May take some time</div>
+          <Loader2Icon className=" animate-spin " />
+        </div>
       </div>
     );
   }

@@ -17,7 +17,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(userData);
     } catch (error) {
       console.error(error);
-      message.error("Uh oh! Something went wrong.");
+      message.error("Internal Server Error");
       // toast({
       //   variant: "destructive",
       //   title: "Uh oh! Something went wrong.",

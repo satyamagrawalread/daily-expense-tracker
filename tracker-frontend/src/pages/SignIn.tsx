@@ -18,7 +18,8 @@ const SignIn = () => {
   const [error, setError] = useState<string>("");
   const navigate = useNavigate();
   const { user, isLoading } = useAuthContext();
-  const { mutate: loginUser, isLoading: isLoginLoading } = usePostMutationLogin();
+  const { mutate: loginUser, isLoading: isLoginLoading } =
+    usePostMutationLogin();
   useEffect(() => {
     if (user) {
       navigate("/", { replace: true });
@@ -36,9 +37,8 @@ const SignIn = () => {
     try {
       loginUser({
         username: data.username,
-        password: data.password
+        password: data.password,
       });
-
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const statusCode = error.response.status;
@@ -57,7 +57,10 @@ const SignIn = () => {
   if (isLoading) {
     return (
       <div className="h-svh flex justify-center items-center">
-        <Loader2Icon className=" animate-spin " />
+        <div className="flex flex-col items-center">
+          <div className="text-gray-500">May take some time</div>
+          <Loader2Icon className=" animate-spin " />
+        </div>
       </div>
     );
   }
@@ -165,7 +168,8 @@ const SignIn = () => {
                 <button
                   type="submit"
                   className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >{isLoginLoading && <Loader2Icon className=" animate-spin " />}
+                >
+                  {isLoginLoading && <Loader2Icon className=" animate-spin " />}
                   Sign In
                 </button>
               </div>
