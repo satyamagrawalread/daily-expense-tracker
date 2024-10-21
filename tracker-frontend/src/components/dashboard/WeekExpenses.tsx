@@ -108,7 +108,7 @@ const WeekExpenses = () => {
                 dataKey={key}
                 stackId="a"
                 fill={`var(--color-${key})`}
-                radius={[0, 0, 4, 4]}
+                radius={[0, 0, 0, 0]}
               />))
             }
             {/* <Bar
