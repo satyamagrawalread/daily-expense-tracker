@@ -43,8 +43,8 @@ const Dashboard = () => {
   return (
     <div>
       {user && (
-        <div className="w-screen h-svh flex flex-col">
-          <div className="w-screen flex justify-between items-center py-5 px-5 bg-gray-100 border-b shadow-sm">
+        <div className="w-screen h-svh overflow-hidden">
+          <div className="w-screen h-[10%] flex justify-between items-center py-5 px-5 bg-gray-100 border-b shadow-sm">
             <span className="text-emerald-800 font-semibold">
               Welcome {user.username}!
             </span>
@@ -52,16 +52,16 @@ const Dashboard = () => {
               Logout
             </Button>
           </div>
-          <div className="w-screen hidden lg:flex lg:flex-row items-start gap-4 mx-auto py-10 px-4 flex-1 overflow-y-auto">
-            <div className=" flex flex-col gap-4 flex-1 w-full ">
+          <div className="w-screen h-[90%] hidden lg:flex lg:flex-row items-start gap-4 mx-auto py-6 px-4 flex-1">
+            <div className="h-full flex flex-col gap-4 flex-1 w-full">
               <MonthExpenses />
               <WeekExpenses />
             </div>
-            <div className=" min-w-80 w-full lg:w-96">
+            <div className="h-full min-w-80 w-full lg:w-96">
               <TransactionsList />
             </div>
           </div>
-          <div className="w-screen flex lg:hidden flex-col gap-4 max-w-6xl mx-auto py-10 px-4 flex-1 overflow-y-auto">
+          <div className="w-screen h-[90%] flex lg:hidden flex-col gap-4 max-w-6xl mx-auto py-10 px-4 flex-1 overflow-y-auto">
             <Tabs defaultValue="transactions">
               <TabsList className="w-full flex ">
                 <TabsTrigger value="transactions">Transactions</TabsTrigger>

@@ -140,7 +140,7 @@ const TransactionsList = () => {
     return (
       <Card>
         <CardHeader>
-          <div className=" flex items-center justify-between ">
+          <div className="flex items-center justify-between ">
             <CardTitle className=" text-xl ">Transactions</CardTitle>
             <SelectComponent
               className=" max-w-[120px] "
@@ -215,7 +215,7 @@ const TransactionsList = () => {
   }
 
   return (
-    <Card>
+    <Card className="h-full flex flex-col">
       <CardHeader>
         <div className=" flex items-center justify-between flex-wrap ">
           <CardTitle className=" text-xl ">Transactions</CardTitle>
@@ -240,8 +240,8 @@ const TransactionsList = () => {
           ))}
         </div>
       </CardHeader>
-      <CardContent>
-        <div className=" flex flex-col gap-4 w-full ">
+      <CardContent className="flex-1 overflow-hidden pr-0">
+        <div className=" flex flex-col gap-4 w-full h-full pr-6 overflow-y-auto ">
           {transactions.map((transaction, index) => {
             return (
               <div key={index}>
