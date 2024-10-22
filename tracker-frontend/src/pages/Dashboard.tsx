@@ -57,7 +57,7 @@ const Dashboard = () => {
               <MonthExpenses />
               <WeekExpenses />
             </div>
-            <div className="h-full min-w-80 w-full lg:w-96">
+            <div className="h-full min-w-80 w-full lg:w-[25rem] xl:w-[35rem]">
               <TransactionsList />
             </div>
           </div>
