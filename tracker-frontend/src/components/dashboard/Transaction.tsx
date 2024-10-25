@@ -23,7 +23,7 @@ const Transaction = ({ transaction }: { transaction: OEachTransaction }) => {
         </div>
       </div>
       <span className="text-sm text-gray-500 font-medium">
-        -₹
+        -
         {transaction.amount.toLocaleString("en-IN", {
           style: "currency",
           currency: "INR",
