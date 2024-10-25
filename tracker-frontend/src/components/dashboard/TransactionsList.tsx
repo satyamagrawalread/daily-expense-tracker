@@ -8,11 +8,9 @@ import { Skeleton } from "../ui/skeleton";
 import { useGetCategories } from "../../hooks/api-hooks/useCategoryQuery";
 import { ICategories } from "../../types/category.types";
 import SelectComponent from "../ui/selectcomponent";
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-// import advancedFormat from 'dayjs/plugin/advancedFormat'
-// dayjs.extend(advancedFormat);
-dayjs.extend(utc);
+import dayjs from "dayjs";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+dayjs.extend(advancedFormat);
 
 const SubcategoryItem = ({
   selectedSubCategories,
@@ -53,8 +51,10 @@ const TransactionsList = () => {
 
   const { data: categoriesData, isLoading: isLoadingCategories } =
     useGetCategories();
-    const today = dayjs.utc().add(330, 'minutes').toISOString().split("T")[0];
-  const yesterday = dayjs.utc().add(330, 'minutes').subtract(1, 'day')
+  const today = dayjs().add(330, "minutes").toISOString().split("T")[0];
+  const yesterday = dayjs()
+    .add(330, "minutes")
+    .subtract(1, "day")
     .toISOString()
     .split("T")[0];
   const categories = useMemo(() => {
@@ -250,7 +250,7 @@ const TransactionsList = () => {
                     ? "Today"
                     : yesterday == transaction.date
                     ? "Yesterday"
-                    : dayjs(transaction.date).format('Do MMM')}
+                    : dayjs(transaction.date).format("Do MMM")}
                 </div>
                 {transaction.transactions.map((item, innerIndex) => {
                   return <Transaction key={innerIndex} transaction={item} />;

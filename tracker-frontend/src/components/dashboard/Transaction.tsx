@@ -3,7 +3,10 @@ import { OEachTransaction } from "../../types/transaction.types";
 import { iconMap } from "../../icons";
 
 const Transaction = ({ transaction }: { transaction: OEachTransaction }) => {
-  const icon = iconMap[transaction.subCategory.replace(/[-\s]/g, '') as keyof typeof iconMap] || "🎉";
+  const icon =
+    iconMap[
+      transaction.subCategory.replace(/[-\s]/g, "") as keyof typeof iconMap
+    ] || "🎉";
   return (
     <div className=" flex items-center justify-between mb-2">
       <div className="flex items-center gap-2">
@@ -19,7 +22,13 @@ const Transaction = ({ transaction }: { transaction: OEachTransaction }) => {
           </p>
         </div>
       </div>
-      <span className="text-sm text-gray-500 font-medium">-₹{transaction.amount.toLocaleString("en-IN")}</span>
+      <span className="text-sm text-gray-500 font-medium">
+        -₹
+        {transaction.amount.toLocaleString("en-IN", {
+          style: "currency",
+          currency: "INR",
+        })}
+      </span>
     </div>
   );
 };
